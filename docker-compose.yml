@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   astarte-housekeeping:
-    image: astarte/astarte_housekeeping:snapshot
+    image: docker.zhubby.com/astarte/astarte_housekeeping:snapshot
     build:
       context: apps/astarte_housekeeping
     env_file:
@@ -12,7 +12,7 @@ services:
       - "scylla"
 
   astarte-housekeeping-api:
-    image: astarte/astarte_housekeeping_api:snapshot
+    image: docker.zhubby.com/astarte/astarte_housekeeping_api:snapshot
     build:
       context: apps/astarte_housekeeping_api
     env_file:
@@ -39,7 +39,7 @@ services:
       - "traefik.http.services.astarte-housekeeping-api.loadbalancer.server.port=4001"
 
   astarte-realm-management:
-    image: astarte/astarte_realm_management:snapshot
+    image: docker.zhubby.com/astarte/astarte_realm_management:snapshot
     build:
       context: apps/astarte_realm_management
     env_file:
@@ -50,7 +50,7 @@ services:
       - "scylla"
 
   astarte-realm-management-api:
-    image: astarte/astarte_realm_management_api:snapshot
+    image: docker.zhubby.com/astarte/astarte_realm_management_api:snapshot
     build:
       context: apps/astarte_realm_management_api
     env_file:
@@ -71,7 +71,7 @@ services:
       - "traefik.http.services.astarte-realm-management-api.loadbalancer.server.port=4000"
 
   astarte-pairing:
-    image: astarte/astarte_pairing:snapshot
+    image: docker.zhubby.com/astarte/astarte_pairing:snapshot
     build:
       context: apps/astarte_pairing
     env_file:
@@ -84,7 +84,7 @@ services:
       - "scylla"
 
   astarte-pairing-api:
-    image: astarte/astarte_pairing_api:snapshot
+    image: docker.zhubby.com/astarte/astarte_pairing_api:snapshot
     build:
       context: apps/astarte_pairing_api
     env_file:
@@ -105,7 +105,7 @@ services:
       - "traefik.http.services.astarte-pairing-api.loadbalancer.server.port=4003"
 
   astarte-appengine-api:
-    image: astarte/astarte_appengine_api:snapshot
+    image: docker.zhubby.com/astarte/astarte_appengine_api:snapshot
     build:
       context: apps/astarte_appengine_api
     env_file:
@@ -129,7 +129,7 @@ services:
       - "traefik.http.services.astarte-appengine-api.loadbalancer.server.port=4002"
 
   astarte-data-updater-plant:
-    image: astarte/astarte_data_updater_plant:snapshot
+    image: docker.zhubby.com/astarte/astarte_data_updater_plant:snapshot
     build:
       context: apps/astarte_data_updater_plant
     env_file:
@@ -147,7 +147,7 @@ services:
       - "scylla"
 
   astarte-trigger-engine:
-    image: astarte/astarte_trigger_engine:snapshot
+    image: docker.zhubby.com/astarte/astarte_trigger_engine:snapshot
     build:
       context: apps/astarte_trigger_engine
     env_file:
@@ -160,7 +160,7 @@ services:
       - "scylla"
 
   astarte-dashboard:
-    image: astarte/astarte-dashboard:snapshot
+    image: docker.zhubby.com/astarte/astarte-dashboard:snapshot
     volumes:
       - ./compose/astarte-dashboard/config.json:/usr/share/nginx/html/user-config/config.json
     depends_on:
@@ -175,7 +175,7 @@ services:
       - "traefik.http.services.astarte-dashboard.loadbalancer.server.port=80"
 
   astarte-grafana:
-    image: astarte/grafana:snapshot
+    image: docker.zhubby.com/astarte/grafana:snapshot
     depends_on:
       - "astarte-appengine-api"
       - "traefik"
@@ -187,7 +187,7 @@ services:
       - "traefik.http.services.astarte-grafana.loadbalancer.server.port=3000"
 
   traefik:
-    image: traefik:v2.9
+    image: docker.zhubby.com/traefik:v2.9
     restart: on-failure
     command:
       # Uncomment this if you want to enable Traefik's web UI
@@ -222,14 +222,14 @@ services:
 
   # RabbitMQ
   rabbitmq:
-    image: rabbitmq:3.12.0-management
+    image: docker.zhubby.com/rabbitmq:3.12.0-management
     restart: on-failure
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
 
   # CFSSL
   cfssl:
-    image: astarte/cfssl:1.5.0-astarte.4
+    image: docker.zhubby.com/astarte/cfssl:1.5.0-astarte.4
     volumes:
       - ./compose/cfssl-config:/config
       - cfssl-data:/data
@@ -239,14 +239,14 @@ services:
 
   # Scylla
   scylla:
-    image: scylladb/scylla:5.2.2
+    image: docker.zhubby.com/scylladb/scylla:5.2.2
     restart: on-failure
     volumes:
       - scylla-data:/var/lib/scylla
 
   # VerneMQ
   vernemq:
-    image: astarte/vernemq:snapshot
+    image: docker.zhubby.com/astarte/vernemq:snapshot
     env_file:
       - ./compose.env
     environment:
